@@ -14,7 +14,7 @@ html, body {
   background:-webkit-linear-gradient(145deg,#2b2f38,#1c1e24);
   color:#e0e0e0;
   box-sizing:border-box;
-  text-align:center; /* helps iOS6 */
+  text-align:center; 
   padding-bottom: env(safe-area-inset-bottom);
 }
 
@@ -31,13 +31,13 @@ nav {
   z-index:10;
 }
 
-/* Navbar inner wrapper (fallback for iOS6) */
+/* Navbar inner wrapper */
 .nav-inner {
   max-width:900px;
   margin:0 auto;
   height:60px;
-  position:relative;
-  text-align:left;
+  position:relative; 
+  text-align:left; 
   padding:0 10px; /* right gap for modern browsers */
 }
 
@@ -58,7 +58,7 @@ nav {
   border-radius:10px;
   color:#fff;
   font-weight:600;
-  padding:6px 16px;
+  padding:6px 12px;
   text-decoration:none;
   text-shadow:0 -1px 0 rgba(0,0,0,0.6);
   white-space:nowrap;
@@ -67,11 +67,12 @@ nav {
 
   /* fallback for iOS6 */
   position:absolute;
-  top:0;
+  top:50%;
   right:10px;
-  height:60px;
-  line-height:60px;
-  transform:none;
+  transform: translateY(-50%);
+  font-size:14px;
+  line-height:normal;
+  max-height:40px;
 }
 
 /* Button gloss overlay */
@@ -106,7 +107,7 @@ nav {
     height:auto;
     line-height:normal;
     transform:none;
-    -webkit-transform: translateZ(0); /* fix Safari glitch */
+    -webkit-transform: translateZ(0);
   }
 }
 
