@@ -1,0 +1,14 @@
+Package: org.thebigboss.auxo_v1.4-2
+Name: Auxo
+Version: 1.4-2
+Architecture: iphoneos-arm
+Description: x
+Maintainer: x
+Author: x
+Section: tweaks
+Depends: firmware (>= 5.1), mobilesubstrate, preferenceloader, applist
+Filename: debs/org.thebigboss.auxo_v1.4-2.deb
+Size: 1818854
+MD5sum: 11753f550e6b4cab730a5eb55bbd8dab
+SHA1: 846623888fe869f3930bf63ffb9d200cabf83dbb
+SHA256: a63e4aab3d823fe957337b1b5c3a70fa9e86dd485c9f38e4b75265ce8c1cc4ad
