@@ -2,15 +2,26 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>undo's cydia repo</title>
 <style>
-body {
+/* --- Reset & body --- */
+html, body {
   margin:0;
+  padding:0;
+  min-height:100vh;
+  height:100%;
   font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
   background:#2b2f38;
   background:-webkit-linear-gradient(145deg,#2b2f38,#1c1e24);
   color:#e0e0e0;
+  box-sizing:border-box;
+}
+
+/* Respect iPhone safe areas */
+body {
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 /* --- Navbar --- */
@@ -26,16 +37,16 @@ nav {
   z-index:10;
 }
 
-/* Wrapper full width for absolute positioning */
+/* Navbar wrapper */
 .nav-inner {
   width:100%;
   max-width:900px;
   margin:0 auto;
   position:relative;
-  text-align:left; /* force brand left */
+  text-align:left;
 }
 
-/* Brand on left with padding */
+/* Brand text */
 .brand {
   font-size:20px;
   font-weight:bold;
@@ -43,10 +54,10 @@ nav {
   text-shadow:0 1px 0 #000;
   display:inline-block;
   vertical-align:middle;
-  padding-left:10px; /* small gap from left edge */
+  padding-left:10px;
 }
 
-/* Cydia button on right with spacing */
+/* Cydia button on right */
 .cydia-button {
   background:-webkit-gradient(linear,left top,left bottom,from(#b27b47),to(#8b5e2e));
   border:1px solid #5c3a1d;
@@ -58,25 +69,50 @@ nav {
   text-decoration:none;
   text-shadow:0 -1px 0 rgba(0,0,0,0.6);
   position:absolute;
-  right:10px; /* small gap from right */
+  right:10px;
   top:50%;
-  margin-top:-15px; /* vertical center */
+  margin-top:-15px;
   white-space:nowrap;
+  overflow:hidden;
+}
+/* Button gloss overlay */
+.cydia-button::before {
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:50%;
+  background:-webkit-gradient(linear,left top,left bottom,color-stop(0, rgba(255,255,255,0.25)), color-stop(1, rgba(255,255,255,0)));
+  border-radius:inherit;
+  pointer-events:none;
 }
 .cydia-button:hover {
   background:-webkit-gradient(linear,left top,left bottom,from(#c48950),to(#9b6a35));
+}
+
+/* Navbar glossy reflection */
+nav::before {
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:50%;
+  background:-webkit-gradient(linear,left top,left bottom,color-stop(0, rgba(255,255,255,0.15)), color-stop(1, rgba(255,255,255,0)));
+  pointer-events:none;
 }
 
 /* --- Container --- */
 .container {
   width:auto;
   max-width:800px;
-  margin:100px auto 60px auto;
+  margin: calc(100px + env(safe-area-inset-top)) auto calc(60px + env(safe-area-inset-bottom)) auto;
   background:-webkit-linear-gradient(top,#3a4452,#2a313d);
   border-radius:20px;
   box-shadow:inset 0 1px 0 #5b6879,0 4px 12px rgba(0,0,0,0.6);
   padding:30px 20px;
-  text-align:center; /* container text centered */
+  text-align:center;
 }
 
 /* Text */
@@ -91,15 +127,14 @@ p {
   line-height:1.5em;
 }
 
-/* Mobile tweaks */
+/* --- Mobile tweaks --- */
 @media (max-width:600px) {
   .container {
-    margin:100px 10px 60px 10px;
+    margin: calc(100px + env(safe-area-inset-top)) 10px calc(60px + env(safe-area-inset-bottom)) 10px;
     padding:25px 15px;
   }
   h1 { font-size:24px; }
   p { font-size:16px; }
-  /* button keeps right position with spacing */
   .cydia-button {
     right:10px;
     top:50%;
