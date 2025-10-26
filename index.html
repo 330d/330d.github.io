@@ -5,12 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>undo's cydia repo</title>
 <style>
-/* --- Reset & body --- */
 html, body {
   margin:0;
   padding:0;
   min-height:100vh;
-  height:100%;
   font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
   background:#2b2f38;
   background:-webkit-linear-gradient(145deg,#2b2f38,#1c1e24);
@@ -18,10 +16,11 @@ html, body {
   box-sizing:border-box;
 }
 
-/* Respect iPhone safe areas */
-body {
-  padding-top: env(safe-area-inset-top);
-  padding-bottom: env(safe-area-inset-bottom);
+/* Modern iOS: bottom safe area */
+@supports(padding: env(safe-area-inset-bottom)) {
+  body {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 }
 
 /* --- Navbar --- */
@@ -30,20 +29,22 @@ nav {
   position:fixed;
   top:0;
   left:0;
+  height:60px;
   background:-webkit-linear-gradient(top,#3b414c,#2b2f38);
   border-bottom:1px solid rgba(255,255,255,0.1);
   box-shadow:0 2px 6px rgba(0,0,0,0.5);
-  padding:10px 0;
   z-index:10;
 }
 
-/* Navbar wrapper */
+/* Navbar wrapper: flexbox for vertical and horizontal alignment */
 .nav-inner {
-  width:100%;
   max-width:900px;
   margin:0 auto;
-  position:relative;
-  text-align:left;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;       /* vertically center brand and button */
+  height:60px;
+  padding:0 10px;
 }
 
 /* Brand text */
@@ -52,12 +53,10 @@ nav {
   font-weight:bold;
   color:#f5f5f5;
   text-shadow:0 1px 0 #000;
-  display:inline-block;
-  vertical-align:middle;
-  padding-left:10px;
+  margin:0;
 }
 
-/* Cydia button on right */
+/* Cydia button */
 .cydia-button {
   background:-webkit-gradient(linear,left top,left bottom,from(#b27b47),to(#8b5e2e));
   border:1px solid #5c3a1d;
@@ -68,12 +67,12 @@ nav {
   padding:6px 16px;
   text-decoration:none;
   text-shadow:0 -1px 0 rgba(0,0,0,0.6);
-  position:absolute;
-  right:10px;
-  top:50%;
-  margin-top:-15px;
   white-space:nowrap;
   overflow:hidden;
+  transition: transform 0.15s ease, box-shadow 0.25s ease;
+  position:relative;
+  margin:0;
+  top:auto;
 }
 /* Button gloss overlay */
 .cydia-button::before {
@@ -89,9 +88,11 @@ nav {
 }
 .cydia-button:hover {
   background:-webkit-gradient(linear,left top,left bottom,from(#c48950),to(#9b6a35));
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
 }
 
-/* Navbar glossy reflection */
+/* Navbar gloss */
 nav::before {
   content:"";
   position:absolute;
@@ -107,7 +108,7 @@ nav::before {
 .container {
   width:auto;
   max-width:800px;
-  margin: calc(100px + env(safe-area-inset-top)) auto calc(60px + env(safe-area-inset-bottom)) auto;
+  margin:80px auto 40px auto; /* below navbar */
   background:-webkit-linear-gradient(top,#3a4452,#2a313d);
   border-radius:20px;
   box-shadow:inset 0 1px 0 #5b6879,0 4px 12px rgba(0,0,0,0.6);
@@ -127,19 +128,14 @@ p {
   line-height:1.5em;
 }
 
-/* --- Mobile tweaks --- */
+/* Mobile tweaks */
 @media (max-width:600px) {
   .container {
-    margin: calc(100px + env(safe-area-inset-top)) 10px calc(60px + env(safe-area-inset-bottom)) 10px;
+    margin:80px 10px 40px 10px;
     padding:25px 15px;
   }
   h1 { font-size:24px; }
   p { font-size:16px; }
-  .cydia-button {
-    right:10px;
-    top:50%;
-    margin-top:-15px;
-  }
 }
 </style>
 </head>
