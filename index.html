@@ -1,25 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>undo's cydia repo</title>
 <style>
-html, body {
+/* --- Base layout & background --- */
+html,body{
   margin:0;
   padding:0;
-  min-height: calc(100vh + 50px);
+  min-height:calc(100vh + 50px);
   font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
   background:#2b2f38;
   background:-webkit-linear-gradient(145deg,#2b2f38,#1c1e24);
   color:#e0e0e0;
   box-sizing:border-box;
-  text-align:center;
+  text-align:center; /* helps old WebKit inline-block fallback */
   padding-bottom: env(safe-area-inset-bottom);
 }
 
 /* --- Navbar --- */
-nav {
+nav{
   width:100%;
   position:fixed;
   top:0;
@@ -28,114 +29,144 @@ nav {
   background:-webkit-linear-gradient(top,#3b414c,#2b2f38);
   border-bottom:1px solid rgba(255,255,255,0.1);
   box-shadow:0 2px 6px rgba(0,0,0,0.5);
-  z-index:10;
+  z-index:20;
 }
 
-/* Navbar inner wrapper */
-.nav-inner {
+/* nav-inner always relative so absolute fallback works */
+.nav-inner{
   max-width:900px;
   margin:0 auto;
   height:60px;
   position:relative;
-  text-align:left;
-  padding:0 10px;
+  text-align:left;     /* fallback for older browsers */
+  padding:0 10px;      /* small horizontal padding for modern / fallback */
+  white-space:normal;  /* will be changed for old devices below if needed */
 }
 
 /* Brand */
-.brand {
+.brand{
+  display:inline-block;
   font-size:20px;
   font-weight:bold;
   color:#f5f5f5;
   text-shadow:0 1px 0 #000;
-  display:inline-block;
   line-height:60px;
 }
 
-/* --- Cydia Button Base --- */
-.cydia-button {
+/* --- Button base (shared) --- */
+.cydia-button{
+  display:inline-block;
+  text-decoration:none;
+  color:#fff;
+  font-weight:600;
   background:-webkit-gradient(linear,left top,left bottom,from(#b27b47),to(#8b5e2e));
   border:1px solid #5c3a1d;
   border-radius:10px;
-  color:#fff;
-  font-weight:600;
-  text-decoration:none;
   text-shadow:0 -1px 0 rgba(0,0,0,0.6);
   white-space:nowrap;
   overflow:hidden;
-  transition: transform 0.15s ease, box-shadow 0.25s ease;
-  position:relative;  /* modern browsers default */
-  display:inline-block;
-  line-height:normal;
+  transition: transform .15s ease, box-shadow .25s ease;
   font-size:16px;
   padding:6px 16px;
+  line-height:normal;
+  position:relative; /* modern default */
 }
 
-/* Button gloss overlay */
-.cydia-button::before {
+/* gloss */
+.cydia-button::before{
   content:"";
   position:absolute;
   top:0; left:0; width:100%; height:50%;
-  background:-webkit-gradient(linear,left top,left bottom,color-stop(0, rgba(255,255,255,0.25)), color-stop(1, rgba(255,255,255,0)));
+  background:-webkit-gradient(linear,left top,left bottom, color-stop(0, rgba(255,255,255,0.25)), color-stop(1, rgba(255,255,255,0)));
   border-radius:inherit;
   pointer-events:none;
 }
 
-/* Hover effect */
-.cydia-button:hover {
+/* hover */
+.cydia-button:hover{
   background:-webkit-gradient(linear,left top,left bottom,from(#c48950),to(#9b6a35));
   transform: translateY(-1px);
   box-shadow:0 4px 8px rgba(0,0,0,0.4);
 }
 
-/* Modern browsers: flexbox layout */
-@supports(display:flex) {
-  .nav-inner {
+/* --- Modern browsers: flexbox (iOS7+, iOS26, desktop) --- */
+@supports (display:flex) {
+  .nav-inner{
     display:flex;
     justify-content:space-between;
     align-items:center;
-    padding:0 10px;
+    padding:0 10px; /* keeps a little gap from the page edge */
   }
-  .cydia-button {
+  .cydia-button{
     position:relative;
     top:auto;
     right:auto;
     height:auto;
     line-height:normal;
-    transform:none;
+    -webkit-transform: translateZ(0); /* avoid Safari transform glitches */
   }
 }
 
-/* iOS6 fallback: absolute positioning + thick button */
+/* --- Old browsers (iOS6 etc) fallback --- 
+   We handle two cases:
+   - small screens (<=480px): absolute, fixed-height button inside navbar (prevents wrap and "under navbar")
+   - larger screens: float:right inline-block to place button on right of nav without breaking layout
+*/
 @supports not (display:flex) {
-  .cydia-button {
-    position:absolute;
-    right:10px;      /* right aligned */
-    top:8px;         /* vertical spacing */
-    height:44px;     /* taller button */
-    line-height:44px;/* center text vertically */
+  /* ensure inline content won't wrap unexpectedly on small devices when we want nowrap */
+  .nav-inner.old-nowrap { white-space:nowrap; } /* class toggled via media query below */
+
+  /* default fallback (works on larger old devices): float to the right */
+  .cydia-button{
+    position:static;
+    float:right;
+    margin-top:10px;
+    margin-right:6px;
+    display:inline-block;
+    height:auto;
+    line-height:normal;
     font-size:16px;
-    padding:0 16px;
-    display:block;
+    padding:6px 14px;
+  }
+
+  /* For small old screens (phones) force absolute placement inside navbar */
+  @media (max-width:480px){
+    .nav-inner { white-space:nowrap; } /* prevent brand wrapping with button */
+    .cydia-button{
+      float:none;               /* cancel float */
+      position:absolute;        /* place inside navbar */
+      right:10px;               /* gap from right */
+      top:8px;                  /* vertical offset so it sits inside navbar */
+      height:44px;              /* thicker button for touch */
+      line-height:44px;         /* vertical center */
+      padding:0 16px;
+      font-size:16px;
+      display:block;            /* ensure width/height respected on old WebKit */
+    }
+  }
+
+  /* For slightly larger old devices (tablets), keep float:right but ensure vertical alignment */
+  @media (min-width:481px){
+    .brand { line-height:60px; } /* make sure brand stays centered */
+    .cydia-button { margin-top:10px; } /* keep some top gap */
   }
 }
 
-/* Navbar gloss overlay */
-nav::before {
+/* navbar gloss overlay */
+nav::before{
   content:"";
-  position:absolute;
-  top:0; left:0; width:100%; height:50%;
+  position:absolute; top:0; left:0; width:100%; height:50%;
   background:-webkit-gradient(linear,left top,left bottom,color-stop(0, rgba(255,255,255,0.15)), color-stop(1, rgba(255,255,255,0)));
   pointer-events:none;
 }
-
-/* Modern Safari / iOS26 fix */
+/* modern safari fix: reduce the overlay to avoid 'liquid glass' washing issue */
 @supports (backdrop-filter: blur(10px)) {
   nav::before { background: rgba(255,255,255,0.05); }
   .cydia-button { -webkit-backface-visibility:hidden; }
 }
 
-/* --- Container --- */
-.container {
+/* --- Container (centered) --- */
+.container{
   display:block;
   width:auto;
   max-width:800px;
@@ -143,19 +174,19 @@ nav::before {
   padding:30px 20px;
   background:-webkit-linear-gradient(top,#3a4452,#2a313d);
   border-radius:20px;
-  box-shadow:inset 0 1px 0 #5b6879,0 4px 12px rgba(0,0,0,0.6);
+  box-shadow:inset 0 1px 0 #5b6879, 0 4px 12px rgba(0,0,0,0.6);
   text-align:center;
 }
 
-/* Text */
-h1 { color:#fff; text-shadow:0 2px 4px rgba(0,0,0,0.7); margin-top:0; }
+/* content */
+h1{ color:#fff; text-shadow:0 2px 4px rgba(0,0,0,0.7); margin-top:0; }
 p { color:#d0d0d0; font-size:17px; line-height:1.5em; }
 
-/* Mobile tweaks */
-@media (max-width:600px) {
-  .container { margin:80px 10px 40px 10px; padding:25px 15px; }
-  h1 { font-size:24px; }
-  p { font-size:16px; }
+/* small-screen container tweak */
+@media (max-width:600px){
+  .container{ margin:80px 10px 40px 10px; padding:25px 15px; }
+  h1{ font-size:24px; }
+  p{ font-size:16px; }
 }
 </style>
 </head>
@@ -164,7 +195,7 @@ p { color:#d0d0d0; font-size:17px; line-height:1.5em; }
 <nav>
   <div class="nav-inner">
     <div class="brand">undo's cydia repo</div>
-    <a href="cydia://url/330d.github.io" class="cydia-button">Add to Cydia</a>
+    <a class="cydia-button" href="cydia://url/330d.github.io">Add to Cydia</a>
   </div>
 </nav>
 
