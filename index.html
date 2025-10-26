@@ -10,9 +10,9 @@ html, body {
   padding:0;
   min-height:100vh;
   font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
-  background:#f5f5f5;
-  background:-webkit-linear-gradient(145deg,#f5f5f5,#e0e0e0);
-  color:#222;
+  background:#2b2f38;
+  background:-webkit-linear-gradient(145deg,#2b2f38,#1c1e24);
+  color:#e0e0e0;
   box-sizing:border-box;
 }
 
@@ -30,9 +30,9 @@ nav {
   top:0;
   left:0;
   height:60px;
-  background:-webkit-linear-gradient(top,#ffffff,#e6e6e6);
-  border-bottom:1px solid rgba(0,0,0,0.1);
-  box-shadow:0 2px 6px rgba(0,0,0,0.1);
+  background:-webkit-linear-gradient(top,#3b414c,#2b2f38);
+  border-bottom:1px solid rgba(255,255,255,0.1);
+  box-shadow:0 2px 6px rgba(0,0,0,0.5);
   z-index:10;
 }
 
@@ -58,25 +58,23 @@ nav {
   }
 }
 
-/* Fallback for old iOS 6: inline-block + float + line-height */
+/* Fallback for old iOS 6: absolute button positioning */
 @supports not(display:flex) {
   .nav-inner {
-    text-align:left;
-    font-size:0;
     position:relative;
+    height:60px;
   }
   .brand {
     display:inline-block;
-    vertical-align:middle;
     line-height:60px;
     font-size:20px;
   }
   .cydia-button {
-    display:inline-block;
-    vertical-align:middle;
-    line-height:60px;
-    float:right;
-    margin-right:10px;
+    position:absolute;
+    right:10px;           /* small gap */
+    top:50%;
+    transform:translateY(-50%);
+    line-height:normal;
     font-size:15px;
   }
 }
@@ -85,20 +83,20 @@ nav {
 .brand {
   font-size:20px;
   font-weight:bold;
-  color:#222;
-  text-shadow:0 1px 0 rgba(255,255,255,0.7);
+  color:#f5f5f5;
+  text-shadow:0 1px 0 #000;
 }
 
 /* Cydia button */
 .cydia-button {
-  background:-webkit-gradient(linear,left top,left bottom,from(#ffd28c),to(#f0b14b));
-  border:1px solid #c69c45;
+  background:-webkit-gradient(linear,left top,left bottom,from(#b27b47),to(#8b5e2e));
+  border:1px solid #5c3a1d;
   border-radius:10px;
-  color:#222;
+  color:#fff;
   font-weight:600;
   padding:6px 16px;
   text-decoration:none;
-  text-shadow:0 1px 0 rgba(255,255,255,0.7);
+  text-shadow:0 -1px 0 rgba(0,0,0,0.6);
   white-space:nowrap;
   overflow:hidden;
   transition: transform 0.15s ease, box-shadow 0.25s ease;
@@ -115,15 +113,15 @@ nav {
   left:0;
   width:100%;
   height:50%;
-  background:-webkit-gradient(linear,left top,left bottom,color-stop(0, rgba(255,255,255,0.5)), color-stop(1, rgba(255,255,255,0)));
+  background:-webkit-gradient(linear,left top,left bottom,color-stop(0, rgba(255,255,255,0.25)), color-stop(1, rgba(255,255,255,0)));
   border-radius:inherit;
   pointer-events:none;
 }
 
 .cydia-button:hover {
-  background:-webkit-gradient(linear,left top,left bottom,from(#ffe6aa),to(#f5c470));
+  background:-webkit-gradient(linear,left top,left bottom,from(#c48950),to(#9b6a35));
   transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.4);
 }
 
 /* Navbar gloss */
@@ -134,8 +132,15 @@ nav::before {
   left:0;
   width:100%;
   height:50%;
-  background:-webkit-gradient(linear,left top,left bottom,color-stop(0, rgba(255,255,255,0.4)), color-stop(1, rgba(255,255,255,0)));
+  background:-webkit-gradient(linear,left top,left bottom,color-stop(0, rgba(255,255,255,0.15)), color-stop(1, rgba(255,255,255,0)));
   pointer-events:none;
+}
+
+/* Reduce overlay on modern iOS with backdrop-filter to fix liquid glass gradient */
+@supports (backdrop-filter: blur(10px)) {
+  nav::before {
+    background: rgba(255,255,255,0.05);
+  }
 }
 
 /* --- Container --- */
@@ -143,21 +148,21 @@ nav::before {
   width:auto;
   max-width:800px;
   margin:80px auto 40px auto; /* below navbar */
-  background:-webkit-linear-gradient(top,#ffffff,#f0f0f0);
+  background:-webkit-linear-gradient(top,#3a4452,#2a313d);
   border-radius:20px;
-  box-shadow:inset 0 1px 0 rgba(0,0,0,0.05),0 4px 12px rgba(0,0,0,0.1);
+  box-shadow:inset 0 1px 0 #5b6879,0 4px 12px rgba(0,0,0,0.6);
   padding:30px 20px;
   text-align:center;
 }
 
 /* Text */
 h1 {
-  color:#222;
-  text-shadow:0 1px 2px rgba(255,255,255,0.7);
+  color:#fff;
+  text-shadow:0 2px 4px rgba(0,0,0,0.7);
   margin-top:0;
 }
 p {
-  color:#555;
+  color:#d0d0d0;
   font-size:17px;
   line-height:1.5em;
 }
