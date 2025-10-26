@@ -14,7 +14,7 @@ html, body {
   background:-webkit-linear-gradient(145deg,#2b2f38,#1c1e24);
   color:#e0e0e0;
   box-sizing:border-box;
-  text-align:center; 
+  text-align:center;
   padding-bottom: env(safe-area-inset-bottom);
 }
 
@@ -36,9 +36,9 @@ nav {
   max-width:900px;
   margin:0 auto;
   height:60px;
-  position:relative; 
-  text-align:left; 
-  padding:0 10px; /* right gap for modern browsers */
+  position:relative;
+  text-align:left;
+  padding:0 10px;
 }
 
 /* Brand */
@@ -51,28 +51,52 @@ nav {
   line-height:60px;
 }
 
-/* Cydia Button fallback (iOS6) */
+/* --- Cydia Button --- */
+/* Modern browsers: flexbox capable (iOS7+/iOS26/desktop) */
+@supports(display:flex) {
+  .nav-inner {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 10px; /* right gap */
+  }
+  .cydia-button {
+    position:relative;
+    top:auto;
+    right:auto;
+    height:auto;
+    line-height:normal;
+    font-size:16px;
+    padding:6px 16px;
+    transform:none;
+  }
+}
+
+/* Fallback for iOS6 and older browsers */
+@supports not (display:flex) {
+  .cydia-button {
+    position:absolute;
+    right:10px;
+    top:10px;
+    height:40px;
+    line-height:40px;
+    font-size:14px;
+    padding:0 12px;
+  }
+}
+
+/* Button base style (shared) */
 .cydia-button {
   background:-webkit-gradient(linear,left top,left bottom,from(#b27b47),to(#8b5e2e));
   border:1px solid #5c3a1d;
   border-radius:10px;
   color:#fff;
   font-weight:600;
-  padding:6px 12px;
   text-decoration:none;
   text-shadow:0 -1px 0 rgba(0,0,0,0.6);
   white-space:nowrap;
   overflow:hidden;
   transition: transform 0.15s ease, box-shadow 0.25s ease;
-
-  /* fallback for iOS6 */
-  position:absolute;
-  top:50%;
-  right:10px;
-  transform: translateY(-50%);
-  font-size:14px;
-  line-height:normal;
-  max-height:40px;
 }
 
 /* Button gloss overlay */
@@ -85,30 +109,11 @@ nav {
   pointer-events:none;
 }
 
-/* Button hover */
+/* Hover effect */
 .cydia-button:hover {
   background:-webkit-gradient(linear,left top,left bottom,from(#c48950),to(#9b6a35));
   transform: translateY(-1px);
   box-shadow:0 4px 8px rgba(0,0,0,0.4);
-}
-
-/* Modern: flexbox (iOS7+ / iOS26 / desktop) */
-@supports(display:flex) {
-  .nav-inner {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:0 10px; /* gap from right */
-  }
-  .cydia-button {
-    position:relative;
-    top:auto;
-    right:auto;
-    height:auto;
-    line-height:normal;
-    transform:none;
-    -webkit-transform: translateZ(0);
-  }
 }
 
 /* Navbar gloss overlay */
