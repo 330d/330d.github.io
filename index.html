@@ -20,22 +20,60 @@
       align-items: center;
     }
 
-    header {
-      padding: 20px;
-      text-align: center;
+    nav {
+      width: 100%;
+      background: linear-gradient(to bottom, #3b414c, #2b2f38);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.1), 0 2px 6px rgba(0,0,0,0.5);
+      padding: 15px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    nav .brand {
       font-size: 22px;
       font-weight: bold;
       color: #f5f5f5;
       text-shadow: 0 1px 0 #000;
-      width: 100%;
-      max-width: 800px;
+    }
+
+    .cydia-button {
+      display: inline-block;
+      background: linear-gradient(to bottom, #b27b47, #8b5e2e);
+      border: 1px solid #5c3a1d;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+      padding: 10px 24px;
+      text-decoration: none;
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.2),
+        0 3px 6px rgba(0,0,0,0.4);
+      text-shadow: 0 -1px 0 rgba(0,0,0,0.6);
+      transition: transform 0.15s ease, box-shadow 0.25s ease;
+    }
+
+    .cydia-button:hover {
+      transform: translateY(-2px);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,0.3),
+        0 6px 12px rgba(0,0,0,0.5);
+    }
+
+    .cydia-button:active {
+      transform: translateY(1px);
+      box-shadow: inset 0 1px 0 rgba(0,0,0,0.5);
     }
 
     .container {
       flex: 1;
       max-width: 800px;
       width: 100%;
-      margin: 20px auto 100px auto;
+      margin: 40px auto 100px auto;
       background: linear-gradient(to bottom, #3a4452, #2a313d);
       border-radius: 20px;
       box-shadow: inset 0 1px 0 #5b6879, 0 4px 12px rgba(0,0,0,0.6);
@@ -53,16 +91,21 @@
     p {
       font-size: 18px;
       color: #d0d0d0;
+      margin-bottom: 40px;
     }
+
   </style>
 </head>
 <body>
 
-  <header>undo's cydia repo</header>
+  <nav>
+    <div class="brand">undo's cydia repo</div>
+    <a href="cydia://url/330d.github.io" class="cydia-button">Add to Cydia</a>
+  </nav>
 
   <div class="container">
     <h1>Lorem ipsum</h1>
-    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
   </div>
 
 </body>
