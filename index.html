@@ -51,42 +51,7 @@ nav {
   line-height:60px;
 }
 
-/* --- Cydia Button --- */
-/* Modern browsers: flexbox capable (iOS7+/iOS26/desktop) */
-@supports(display:flex) {
-  .nav-inner {
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:0 10px; /* right gap */
-  }
-  .cydia-button {
-    position:relative;
-    top:auto;
-    right:auto;
-    height:auto;
-    line-height:normal;
-    font-size:16px;
-    padding:6px 16px;
-    transform:none;
-  }
-}
-
-/* Fallback for iOS6 and older browsers */
-@supports not (display:flex) {
-  .cydia-button {
-    position:absolute;
-    top:10px;        /* vertical spacing inside navbar */
-    right:10px;      /* align to right */
-    height:44px;     /* make button taller */
-    line-height:44px;/* vertically center text */
-    font-size:16px;  /* bigger text */
-    padding:0 16px;  /* horizontal padding */
-    white-space:nowrap;
-  }
-}
-
-/* Button base style (shared) */
+/* --- Cydia Button Base --- */
 .cydia-button {
   background:-webkit-gradient(linear,left top,left bottom,from(#b27b47),to(#8b5e2e));
   border:1px solid #5c3a1d;
@@ -98,6 +63,11 @@ nav {
   white-space:nowrap;
   overflow:hidden;
   transition: transform 0.15s ease, box-shadow 0.25s ease;
+  position:relative;  /* modern browsers default */
+  display:inline-block;
+  line-height:normal;
+  font-size:16px;
+  padding:6px 16px;
 }
 
 /* Button gloss overlay */
@@ -115,6 +85,38 @@ nav {
   background:-webkit-gradient(linear,left top,left bottom,from(#c48950),to(#9b6a35));
   transform: translateY(-1px);
   box-shadow:0 4px 8px rgba(0,0,0,0.4);
+}
+
+/* Modern browsers: flexbox layout */
+@supports(display:flex) {
+  .nav-inner {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 10px;
+  }
+  .cydia-button {
+    position:relative;
+    top:auto;
+    right:auto;
+    height:auto;
+    line-height:normal;
+    transform:none;
+  }
+}
+
+/* iOS6 fallback: absolute positioning + thick button */
+@supports not (display:flex) {
+  .cydia-button {
+    position:absolute;
+    right:10px;      /* right aligned */
+    top:8px;         /* vertical spacing */
+    height:44px;     /* taller button */
+    line-height:44px;/* center text vertically */
+    font-size:16px;
+    padding:0 16px;
+    display:block;
+  }
 }
 
 /* Navbar gloss overlay */
