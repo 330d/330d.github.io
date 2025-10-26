@@ -8,13 +8,13 @@
 html, body {
   margin:0;
   padding:0;
-  min-height: calc(100vh + 50px); 
+  min-height: calc(100vh + 50px);
   font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
   background:#2b2f38;
   background:-webkit-linear-gradient(145deg,#2b2f38,#1c1e24);
   color:#e0e0e0;
   box-sizing:border-box;
-  text-align:center; 
+  text-align:center; /* helps iOS6 */
   padding-bottom: env(safe-area-inset-bottom);
 }
 
@@ -31,14 +31,14 @@ nav {
   z-index:10;
 }
 
-/* Navbar inner wrapper */
+/* Navbar inner wrapper (fallback for iOS6) */
 .nav-inner {
   max-width:900px;
   margin:0 auto;
   height:60px;
-  position:relative; 
-  text-align:left; 
-  padding:0 10px; /* small padding for iOS26 right gap */
+  position:relative;
+  text-align:left;
+  padding:0 10px; /* right gap for modern browsers */
 }
 
 /* Brand */
@@ -51,7 +51,7 @@ nav {
   line-height:60px;
 }
 
-/* Cydia Button */
+/* Cydia Button fallback (iOS6) */
 .cydia-button {
   background:-webkit-gradient(linear,left top,left bottom,from(#b27b47),to(#8b5e2e));
   border:1px solid #5c3a1d;
@@ -64,10 +64,14 @@ nav {
   white-space:nowrap;
   overflow:hidden;
   transition: transform 0.15s ease, box-shadow 0.25s ease;
-  position:absolute; /* fallback for iOS6 */
-  top:50%;
-  right:10px;       /* iOS6 gap */
-  transform: translateY(-50%);
+
+  /* fallback for iOS6 */
+  position:absolute;
+  top:0;
+  right:10px;
+  height:60px;
+  line-height:60px;
+  transform:none;
 }
 
 /* Button gloss overlay */
@@ -87,19 +91,22 @@ nav {
   box-shadow:0 4px 8px rgba(0,0,0,0.4);
 }
 
-/* Modern: flexbox for iOS7+ and desktop */
+/* Modern: flexbox (iOS7+ / iOS26 / desktop) */
 @supports(display:flex) {
   .nav-inner {
     display:flex;
     justify-content:space-between;
     align-items:center;
+    padding:0 10px; /* gap from right */
   }
   .cydia-button {
     position:relative;
     top:auto;
     right:auto;
+    height:auto;
+    line-height:normal;
     transform:none;
-    -webkit-transform: translateZ(0); /* fixes Safari glitch */
+    -webkit-transform: translateZ(0); /* fix Safari glitch */
   }
 }
 
@@ -123,7 +130,7 @@ nav::before {
   display:block;
   width:auto;
   max-width:800px;
-  margin:80px auto 40px auto; 
+  margin:80px auto 40px auto;
   padding:30px 20px;
   background:-webkit-linear-gradient(top,#3a4452,#2a313d);
   border-radius:20px;
