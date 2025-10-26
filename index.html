@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -8,12 +8,13 @@
 html, body {
   margin:0;
   padding:0;
-  min-height: calc(100vh + 50px); /* ensures page long enough for liquid glass */
+  min-height: calc(100vh + 50px); 
   font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;
   background:#2b2f38;
   background:-webkit-linear-gradient(145deg,#2b2f38,#1c1e24);
   color:#e0e0e0;
   box-sizing:border-box;
+  text-align:center; 
   padding-bottom: env(safe-area-inset-bottom);
 }
 
@@ -28,7 +29,6 @@ nav {
   border-bottom:1px solid rgba(255,255,255,0.1);
   box-shadow:0 2px 6px rgba(0,0,0,0.5);
   z-index:10;
-  padding:0 10px;
 }
 
 /* Navbar inner wrapper */
@@ -36,39 +36,22 @@ nav {
   max-width:900px;
   margin:0 auto;
   height:60px;
+  position:relative; 
+  text-align:left; 
+  padding:0 10px; /* small padding for iOS26 right gap */
 }
 
-/* Brand wrapper (for iOS6 fallback) */
-.brand-wrapper { display:inline-block; vertical-align:middle; line-height:60px; }
-
-/* Modern: flexbox */
-@supports(display:flex) {
-  .nav-inner { display:flex; justify-content:space-between; align-items:center; }
-}
-
-/* iOS6 fallback: absolute button positioning */
-@supports not(display:flex) {
-  .nav-inner { position:relative; height:60px; }
-  .brand-wrapper { display:inline-block; vertical-align:middle; line-height:60px; font-size:20px; }
-  .cydia-button {
-    position:absolute;
-    right:10px;       /* always on right */
-    top:50%;
-    transform:translateY(-50%);
-    line-height:normal;
-    font-size:15px;
-  }
-}
-
-/* Brand text */
+/* Brand */
 .brand {
   font-size:20px;
   font-weight:bold;
   color:#f5f5f5;
   text-shadow:0 1px 0 #000;
+  display:inline-block;
+  line-height:60px;
 }
 
-/* Cydia button */
+/* Cydia Button */
 .cydia-button {
   background:-webkit-gradient(linear,left top,left bottom,from(#b27b47),to(#8b5e2e));
   border:1px solid #5c3a1d;
@@ -81,7 +64,10 @@ nav {
   white-space:nowrap;
   overflow:hidden;
   transition: transform 0.15s ease, box-shadow 0.25s ease;
-  position:relative;
+  position:absolute; /* fallback for iOS6 */
+  top:50%;
+  right:10px;       /* iOS6 gap */
+  transform: translateY(-50%);
 }
 
 /* Button gloss overlay */
@@ -94,19 +80,30 @@ nav {
   pointer-events:none;
 }
 
-/* Fix for modern Safari / iOS 26 to prevent crooked button */
-@supports (backdrop-filter: blur(10px)) {
-  nav::before { background: rgba(255,255,255,0.05); }
-  .cydia-button { -webkit-backface-visibility:hidden; }
-}
-
+/* Button hover */
 .cydia-button:hover {
   background:-webkit-gradient(linear,left top,left bottom,from(#c48950),to(#9b6a35));
   transform: translateY(-1px);
   box-shadow:0 4px 8px rgba(0,0,0,0.4);
 }
 
-/* Navbar gloss */
+/* Modern: flexbox for iOS7+ and desktop */
+@supports(display:flex) {
+  .nav-inner {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .cydia-button {
+    position:relative;
+    top:auto;
+    right:auto;
+    transform:none;
+    -webkit-transform: translateZ(0); /* fixes Safari glitch */
+  }
+}
+
+/* Navbar gloss overlay */
 nav::before {
   content:"";
   position:absolute;
@@ -115,16 +112,23 @@ nav::before {
   pointer-events:none;
 }
 
+/* Modern Safari / iOS26 fix */
+@supports (backdrop-filter: blur(10px)) {
+  nav::before { background: rgba(255,255,255,0.05); }
+  .cydia-button { -webkit-backface-visibility:hidden; }
+}
+
 /* --- Container --- */
 .container {
-  width: auto;
-  max-width: 800px;
-  margin: 80px auto 40px auto; /* centered horizontally */
-  padding: 30px 15px;           /* small gap inside container */
-  background: -webkit-linear-gradient(top,#3a4452,#2a313d);
-  border-radius: 20px;
-  box-shadow: inset 0 1px 0 #5b6879,0 4px 12px rgba(0,0,0,0.6);
-  text-align: center;
+  display:block;
+  width:auto;
+  max-width:800px;
+  margin:80px auto 40px auto; 
+  padding:30px 20px;
+  background:-webkit-linear-gradient(top,#3a4452,#2a313d);
+  border-radius:20px;
+  box-shadow:inset 0 1px 0 #5b6879,0 4px 12px rgba(0,0,0,0.6);
+  text-align:center;
 }
 
 /* Text */
@@ -143,7 +147,7 @@ p { color:#d0d0d0; font-size:17px; line-height:1.5em; }
 
 <nav>
   <div class="nav-inner">
-    <div class="brand-wrapper"><div class="brand">undo's cydia repo</div></div>
+    <div class="brand">undo's cydia repo</div>
     <a href="cydia://url/330d.github.io" class="cydia-button">Add to Cydia</a>
   </div>
 </nav>
