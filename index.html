@@ -76,12 +76,13 @@ nav {
 @supports not (display:flex) {
   .cydia-button {
     position:absolute;
-    right:10px;
-    top:10px;
-    height:40px;
-    line-height:40px;
-    font-size:14px;
-    padding:0 12px;
+    top:10px;        /* vertical spacing inside navbar */
+    right:10px;      /* align to right */
+    height:44px;     /* make button taller */
+    line-height:44px;/* vertically center text */
+    font-size:16px;  /* bigger text */
+    padding:0 16px;  /* horizontal padding */
+    white-space:nowrap;
   }
 }
 
