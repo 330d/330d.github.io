@@ -112,10 +112,20 @@ nav{
 }
 h1{color:#fff;text-shadow:0 2px 4px rgba(0,0,0,.7);}
 p{color:#d0d0d0;font-size:17px;line-height:1.5em;}
+
+/* --- MOBILE / SMALL SCREEN --- */
 @media (max-width:600px){
   .container{margin:80px 10px 40px 10px;padding:25px 15px;}
   h1{font-size:24px;}
   p{font-size:16px;}
+}
+
+/* --- iPad / old iOS extra spacing fix --- */
+@media screen and (max-device-width:1024px){
+  .container{
+    margin-left:20px !important;
+    margin-right:20px !important;
+  }
 }
 </style>
 </head>
