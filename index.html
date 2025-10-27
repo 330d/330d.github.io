@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>undo's cydia repo</title>
+<title>undo's repo</title>
 <style>
 html,body{
   margin:0;
@@ -15,7 +15,6 @@ html,body{
   -webkit-text-size-adjust:none;
 }
 
-/* --- NAVBAR --- */
 nav{
   position:fixed;
   top:0;
@@ -44,7 +43,6 @@ nav{
   text-shadow:0 1px 0 #000;
 }
 
-/* -------- REAL IOS6 FALLBACK (FIRST READ BY OLD SAFARI) -------- */
 .cydia-button{
   position:absolute;
   right:10px;
@@ -73,7 +71,6 @@ nav{
   pointer-events:none;
 }
 
-/* -------- MODERN OVERRIDE (read by newer browsers) -------- */
 @media all and (min-resolution:0.001dpcm){
   @supports (display:flex){
     .nav-inner{
@@ -100,7 +97,6 @@ nav{
   }
 }
 
-/* --- CONTAINER --- */
 .container{
   max-width:800px;
   margin:80px auto 40px auto;
@@ -113,14 +109,12 @@ nav{
 h1{color:#fff;text-shadow:0 2px 4px rgba(0,0,0,.7);}
 p{color:#d0d0d0;font-size:17px;line-height:1.5em;}
 
-/* --- MOBILE / SMALL SCREEN --- */
 @media (max-width:600px){
   .container{margin:80px 10px 40px 10px;padding:25px 15px;}
   h1{font-size:24px;}
   p{font-size:16px;}
 }
 
-/* --- iPad / old iOS extra spacing fix --- */
 @media screen and (max-device-width:1024px){
   .container{
     margin-left:20px !important;
@@ -133,7 +127,7 @@ p{color:#d0d0d0;font-size:17px;line-height:1.5em;}
 
 <nav>
   <div class="nav-inner">
-    <div class="brand">undo's cydia repo</div>
+    <div class="brand">undo's repo</div>
     <a href="cydia://url/330d.github.io" class="cydia-button">Add to Cydia</a>
   </div>
 </nav>
